@@ -1,3 +1,4 @@
+// Récupération de la commande - Confirmation commande
 function main(){
     const idNode = document.getElementById("orderId");
     idNode.innerText = localStorage.getItem("orderId");

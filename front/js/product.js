@@ -1,6 +1,6 @@
-var str = window.location.href;
-var url = new URL(str);
-var idProduct = url.searchParams.get("id");
+let str = window.location.href;
+let url = new URL(str);
+let idProduct = url.searchParams.get("id");
 console.log(idProduct);
 let article = "";
 
@@ -28,7 +28,8 @@ function getArticle() {
         console.log("Erreur de la requête API");
     })
 }
-    
+
+// Récupération des carrectéristques produits
 function getPost(article){
     // Insertion de l'image
     let productImg = document.createElement("img");

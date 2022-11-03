@@ -2,13 +2,13 @@ fillSection();
 
 // Récupération des articles de l'API
 async function getArticles() {
-    var articlesCatch = await fetch("http://localhost:3000/api/products")
+    let articlesCatch = await fetch("http://localhost:3000/api/products")
     return await articlesCatch.json();
 }
 
     // Répartition des données de l'API dans le DOM
 async function fillSection() {
-    var result = await getArticles ()
+    let result = await getArticles ()
     .then(function (resultatAPI){
         const articles = resultatAPI;
         console.table(articles);

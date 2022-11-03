@@ -92,14 +92,15 @@ for (let produit in produitLocalStorage){
 }}
 getCart();
 
+// Récupération quantités et prix
 function getTotals(){
 
     // Récupération du total des quantités
-    var elemsQtt = document.getElementsByClassName('itemQuantity');
-    var myLength = elemsQtt.length,
+    let elemsQtt = document.getElementsByClassName('itemQuantity');
+    let myLength = elemsQtt.length,
     totalQtt = 0;
 
-    for (var i = 0; i < myLength; ++i) {
+    for (let i = 0; i < myLength; ++i) {
         totalQtt += elemsQtt[i].valueAsNumber;
     }
 
@@ -110,7 +111,7 @@ function getTotals(){
     // Récupération du prix total
     totalPrice = 0;
 
-    for (var i = 0; i < myLength; ++i) {
+    for (let i = 0; i < myLength; ++i) {
         totalPrice += (elemsQtt[i].valueAsNumber * produitLocalStorage[i].prixProduit);
     }
 
@@ -176,9 +177,9 @@ function getForm() {
     let form = document.querySelector(".cart__order__form");
 
     //Création des expressions régulières
-    let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
-    let charRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
-    let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+    let emailRegExp = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+    let charRegExp = /^[a-zA-Z ,.'-]+$/;
+    let addressRegExp = /^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/;
 
     // Ecoute de la modification du prénom
     form.firstName.addEventListener('change', function() {
@@ -212,7 +213,7 @@ function getForm() {
         if (charRegExp.test(inputFirstName.value)) {
             firstNameErrorMsg.innerHTML = '';
         } else {
-            firstNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+            firstNameErrorMsg.innerHTML = 'Ce champ est obligatoire.';
         }
     };
 
@@ -223,7 +224,7 @@ function getForm() {
         if (charRegExp.test(inputLastName.value)) {
             lastNameErrorMsg.innerHTML = '';
         } else {
-            lastNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+            lastNameErrorMsg.innerHTML = 'Ce champ est obligatoire.';
         }
     };
 
@@ -234,7 +235,7 @@ function getForm() {
         if (addressRegExp.test(inputAddress.value)) {
             addressErrorMsg.innerHTML = '';
         } else {
-            addressErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+            addressErrorMsg.innerHTML = 'Ce champ est obligatoire.';
         }
     };
 
@@ -245,7 +246,7 @@ function getForm() {
         if (charRegExp.test(inputCity.value)) {
             cityErrorMsg.innerHTML = '';
         } else {
-            cityErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+            cityErrorMsg.innerHTML = 'Ce champ est obligatoire.';
         }
     };
 
@@ -256,7 +257,7 @@ function getForm() {
         if (emailRegExp.test(inputEmail.value)) {
             emailErrorMsg.innerHTML = '';
         } else {
-            emailErrorMsg.innerHTML = 'Veuillez renseigner votre email.';
+            emailErrorMsg.innerHTML = 'Email incorrecte. Vérifiez votre adresse mail.';
         }
     };
     }
@@ -278,8 +279,8 @@ function postForm(){
 
         //Construction d'un array depuis le local storage
         let idProducts = [];
-        for (let i = 0; i<produitLocalStorage.length;i++) {
-            idProducts.push(produitLocalStorage[i].idProduit);
+        for (const element of produitLocalStorage) {
+            idProducts.push(element.idProduit);
         }
         console.log(idProducts);
 
