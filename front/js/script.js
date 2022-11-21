@@ -1,48 +1,55 @@
-fillSection();
+/* var requestURL = "http://localhost:3000/api/products"
+var request = new XMLHttpRequest();
+request.open('GET', requestURL, true);
+request.responseType = 'json';
+request.send();
+request.onload = function (){
+    var allCouch = request.response;
+    showCouchs(allCouch);
+}*/
 
-// Récupération des articles de l'API
-async function getArticles() {
-    let articlesCatch = await fetch("http://localhost:3000/api/products")
-    return await articlesCatch.json();
-}
+//Appel API de tous les produits
+var allCouch = "";
+var requestURL = "http://localhost:3000/api/products/"
+fetch(requestURL)
+.then(response => response.json())
+.then(async function (resultatAPI) {
+    allCouch = await resultatAPI;
+    showCouchs(allCouch);
+})
+.catch(error => alert("Erreur : " + error));
 
-    // Répartition des données de l'API dans le DOM
-async function fillSection() {
-    let result = await getArticles ()
-    .then(function (resultatAPI){
-        const articles = resultatAPI;
-        console.table(articles);
-        for (let article in articles) {
+// Affichage des produits
+function showCouchs(productsSheet) {
+    for (const element of productsSheet){
+        var product = element;
+        let allPanels = document.querySelector('.items');
 
-            // Insertion de l'élément "a"
-            let productLink = document.createElement("a");
-            document.querySelector(".items").appendChild(productLink);
-            productLink.href = `product.html?id=${resultatAPI[article]._id}`;
+        // insertion du lien de chaque canapés
+        var createLinkPanel = document.createElement('a');
+        createLinkPanel.setAttribute('href', "./product.html?id=" + product._id);
+        allPanels.appendChild(createLinkPanel);
 
-            // Insertion de l'élément "article"
-            let productArticle = document.createElement("article");
-            productLink.appendChild(productArticle);
+        // insertion des articles
+        var createArticle = document.createElement('article');
+        createLinkPanel.appendChild(createArticle);
 
-            // Insertion de l'image
-            let productImg = document.createElement("img");
-            productArticle.appendChild(productImg);
-            productImg.src = resultatAPI[article].imageUrl;
-            productImg.alt = resultatAPI[article].altTxt;
+        // insertion des images
+        var createPict = document.createElement('img');
+        createPict.setAttribute('src', product.imageUrl);
+        createPict.setAttribute('alt', product.altTxt);
+        createArticle.appendChild(createPict);
+    
+        // insertion des noms dans h3
+        var createH3 = document.createElement('h3');
+        createH3.className = 'productName';
+        createH3.textContent = product.name;
+        createArticle.appendChild(createH3);
 
-            // Insertion du titre "h3"
-            let productName = document.createElement("h3");
-            productArticle.appendChild(productName);
-            productName.classList.add("productName");
-            productName.innerHTML = resultatAPI[article].name;
-
-            // Insertion de la description "p"
-            let productDescription = document.createElement("p");
-            productArticle.appendChild(productDescription);
-            productDescription.classList.add("productName");
-            productDescription.innerHTML = resultatAPI[article].description;
-        }
-    })
-    .catch (function(error){
-        return error;
-    });
+        // insertion des descriptions dans p
+        var createP = document.createElement('p');
+        createP.className = 'productDescription';
+        createP.textContent = product.description;
+        createArticle.appendChild(createP);
+    }
 }
